@@ -662,6 +662,9 @@ class MenuClickHandlerForMates():
             'courage/swordplay': f"{mate.courage}/{mate.swordplay}",
             '3': '',
             'accounting/gunnery/navigation': f"{mate.accounting}/{mate.gunnery}/{mate.navigation}",
+            '4': '',
+            'str/dex/con':f"{mate.str}/{mate.dex}/{mate.con}",
+            'int/wis/cha':f"{mate.int}/{mate.wis}/{mate.cha}",
         }
 
         # make text from dict
@@ -1822,6 +1825,18 @@ class Market():
               f"{text3}."
         mate_speak(self.game, mate, msg)
 
+        
+        # select ships        
+        def select_ships(cargo_name):
+            # get ships
+            ships = self.game.my_role.ships
+            # new menu
+            dict = {}
+            for index, ship in enumerate(ships):
+                dict[f"{index} {ship.name} {ship.useful_capacity-ship.get_cargo_and_supply_capacity()}/{ship.useful_capacity}"] = [_show_one_ship, [self, ship, False, index]]
+            self.game.button_click_handler.make_menu(dict)                              
+        
+
         # buy button
         def buy(cargo_name):
             escape_twice(self.game)
@@ -1831,7 +1846,8 @@ class Market():
                               [cargo_name])
 
         dict = {
-            'Buy': [buy, cargo_name]
+            # 'Buy': [buy, cargo_name]
+            'select ships': [select_ships, cargo_name]
         }
 
         self.game.button_click_handler.make_menu(dict)

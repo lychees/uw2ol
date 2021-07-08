@@ -400,7 +400,7 @@ class Role:
         # self.move_timer.stop()
 
         # try enter_building()
-        self.GAME.button_click_handler.menu_click_handler.cmds.enter_building()
+        # self.GAME.button_click_handler.menu_click_handler.cmds.enter_building()
 
     def start_moving_out(self, params):
         """npc only"""
@@ -2368,6 +2368,12 @@ class Mate:
         self.intuition = mate_dict['intuition']
         self.courage = mate_dict['courage']
         self.swordplay = mate_dict['swordplay']
+        self.str = 10
+        self.dex = 10
+        self.con = 10
+        self.int = 10
+        self.wis = 10
+        self.str = 10
 
     def _init_skills_and_assistants(self, id):
         mate_dict = hash_mates[id]
@@ -2381,6 +2387,14 @@ class Mate:
         self.accountant = None
         self.first_mate = None
         self.chief_navigator = None
+
+        # D&D
+        self.str = 10
+        self.dex = 10
+        self.con = 10
+        self.int = 10
+        self.wis = 10
+        self.str = 10
 
     def set_as_captain_of(self, ship):
         if not self.duty:

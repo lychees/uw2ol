@@ -471,10 +471,12 @@ def _hide_password(self):
         pwd_entry_box = self.active_input_boxes[-1]
         text_in_entry_box = pwd_entry_box.get_text()
 
-        if pwd_entry_box.focused:
-            asterisks_text = '*' * len(text_in_entry_box) + '|'
-        else:
-            asterisks_text = '*' * len(text_in_entry_box)
+        # builtins.AttributeError: 'UITextEntryLine' object has no attribute 'focused'
+        # if pwd_entry_box.focused:
+        #    asterisks_text = '*' * len(text_in_entry_box) + '|'
+        # else:
+        #    asterisks_text = '*' * len(text_in_entry_box)
+        asterisks_text = '*' * len(text_in_entry_box)
         draw_text(self, asterisks_text, 300 - 70, 300 - 160, c.WHITE)
 
 def blit_text(surface, text, pos, font, color=pygame.Color('black')):

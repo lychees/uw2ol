@@ -152,8 +152,8 @@ class InputBoxWindow(pygame_gui.elements.UIWindow):
             index = 0
             for value in values_list:
                 input_box_list[index].set_text(value)
-                input_box_list[index].kill()
-                text_box_list[index].kill()
+                # input_box_list[index].kill()
+                # text_box_list[index].kill()
                 index +=1
 
         # get dict
@@ -1833,17 +1833,22 @@ class Market():
             # new menu
             dict = {}
             for index, ship in enumerate(ships):
-                dict[f"{index} {ship.name} {ship.useful_capacity-ship.get_cargo_and_supply_capacity()}/{ship.useful_capacity}"] = [_show_one_ship, [self, ship, False, index]]
+                dict[f"{index} {ship.name} {ship.useful_capacity-ship.get_cargo_and_supply_capacity()}/{ship.useful_capacity}"] = [buy, [cargo_name, 1]]
             self.game.button_click_handler.make_menu(dict)                              
         
 
         # buy button
-        def buy(cargo_name):
-            escape_twice(self.game)
-            reactor.callLater(0.3, self.game.button_click_handler. \
+        def buy(param):
+            cargo_name = param[0]
+            ship_id = param[1]
+            escape_thrice(self.game)
+            print(cargo_name)
+            print(ship_id)
+            print('####')
+            reactor.callLater(1, self.game.button_click_handler. \
                 make_input_boxes, 'buy_cargo',
                               ['cargo name', 'count', 'ship num'],
-                              [cargo_name])
+                              [cargo_name, str(ship_id), str(ship_id)])
 
         dict = {
             # 'Buy': [buy, cargo_name]

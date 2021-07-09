@@ -2373,7 +2373,7 @@ class Mate:
         self.con = 10
         self.int = 10
         self.wis = 10
-        self.str = 10
+        self.cha = 10
 
     def _init_skills_and_assistants(self, id):
         mate_dict = hash_mates[id]
@@ -2394,7 +2394,7 @@ class Mate:
         self.con = 10
         self.int = 10
         self.wis = 10
-        self.str = 10
+        self.cha = 10
 
     def set_as_captain_of(self, ship):
         if not self.duty:

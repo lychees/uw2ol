@@ -1825,36 +1825,24 @@ class Market():
               f"{text3}."
         mate_speak(self.game, mate, msg)
 
-        
-        # select ships        
-        def select_ships(cargo_name):
-            # get ships
-            ships = self.game.my_role.ships
-            # new menu
-            dict = {}
-            for index, ship in enumerate(ships):
-                dict[f"{index} {ship.name} {ship.useful_capacity-ship.get_cargo_and_supply_capacity()}/{ship.useful_capacity}"] = [buy, [cargo_name, 1]]
-            self.game.button_click_handler.make_menu(dict)                              
-        
-
         # buy button
         def buy(param):
             cargo_name = param[0]
             ship_id = param[1]
-            escape_thrice(self.game)
-            print(cargo_name)
-            print(ship_id)
-            print('####')
-            reactor.callLater(1, self.game.button_click_handler. \
+            escape_twice(self.game)            
+
+            ship = self.game.my_role.ships[ship_id]
+            max_count = ship.get_cargo_and_supply_capacity()
+
+            reactor.callLater(0.3, self.game.button_click_handler. \
                 make_input_boxes, 'buy_cargo',
                               ['cargo name', 'count', 'ship num'],
-                              [cargo_name, str(ship_id), str(ship_id)])
+                              [cargo_name, str(max_count), str(ship_id)])
 
-        dict = {
-            # 'Buy': [buy, cargo_name]
-            'select ships': [select_ships, cargo_name]
-        }
-
+        ships = self.game.my_role.ships
+        dict = {}
+        for index, ship in enumerate(ships):
+            dict[f"{index} {ship.name} {ship.useful_capacity-ship.get_cargo_and_supply_capacity()}/{ship.useful_capacity}"] = [buy, [cargo_name, index]]
         self.game.button_click_handler.make_menu(dict)
 
     def sell(self):

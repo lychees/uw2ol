@@ -340,23 +340,25 @@ class ButtonClickHandler():
         self.game = game
         self.ui_manager = game.ui_manager
         self.menu_click_handler = MenuClickHandler(game)
-
+    
     def escape(self):
         handle_pygame_event.escape(self.game, '')
 
     def escape_thrice(self):
         escape_thrice(self.game)
 
-    def escape_4_times(self):
-        handle_pygame_event.escape(game, '')
-        reactor.callLater(0.1, handle_pygame_event.escape, game, '')
-        reactor.callLater(0.2, handle_pygame_event.escape, game, '')
-        reactor.callLater(0.3, handle_pygame_event.escape, game, '')
-
     def escape_n_times(self, n):
         game = self.game
         for i in range(n):
             delay = i * 0.1
+            reactor.callLater(delay, handle_pygame_event.escape, game, '')
+
+    def clear_menu(self):
+        game = self.game
+        i = 0
+        while len(game.menu_stack) > 0:
+            delay = 0
+            print (game.menu_stack)
             reactor.callLater(delay, handle_pygame_event.escape, game, '')
 
     def make_menu(self, dict):
@@ -444,6 +446,7 @@ class ButtonClickHandler():
         sunk_window = PanelWindow(rect, game.ui_manager, text, game, image)
 
     def on_button_click_ships(self):
+        self.clear_menu()
         dict = {
             'Fleet Info': self.menu_click_handler.ships.fleet_info,
             'Ship Info': self.menu_click_handler.ships.ship_info,
@@ -452,6 +455,7 @@ class ButtonClickHandler():
         self.make_menu(dict)
 
     def on_button_click_mates(self):
+        self.clear_menu()
         dict = {
             'Admiral Info':self.menu_click_handler.mates.admiral_info,
             'Mate Info':self.menu_click_handler.mates.mate_info,
@@ -459,6 +463,7 @@ class ButtonClickHandler():
         self.make_menu(dict)
 
     def on_button_click_items(self):
+        self.clear_menu()
         dict = {
             'Equipments': self.menu_click_handler.items.equipments,
             'Items': self.menu_click_handler.items.on_menu_click_items,
@@ -470,6 +475,7 @@ class ButtonClickHandler():
         self.make_menu(dict)
 
     def cmds(self):
+        self.clear_menu()
         dict = {
             'Enter Building (F)': self.menu_click_handler.cmds.enter_building,
             'Enter Port (M)': test,
@@ -480,6 +486,7 @@ class ButtonClickHandler():
         self.make_menu(dict)
 
     def options(self):
+        self.clear_menu()
         dict = {
             'Language(L)': self.menu_click_handler.options.language,
             'Sounds': self.menu_click_handler.options.sounds,
@@ -489,6 +496,7 @@ class ButtonClickHandler():
         self.make_menu(dict)
 
     def port(self):
+        self.clear_menu()
         if self.game.my_role.map.isdigit() and c.DEVELOPER_MODE_ON:
             dict = {
                 'Market': self.menu_click_handler.port.on_menu_click_market,
@@ -510,7 +518,6 @@ class ButtonClickHandler():
             # make_message_box('only available in port!')
 
     def battle(self):
-
         if 'battle' in self.game.my_role.map:
             dict = {
                 'View Enemy Ships': self.menu_click_handler.battle.view_enemy_ships,
@@ -526,7 +533,6 @@ class ButtonClickHandler():
             print('only available in battle!')
 
     def login(self):
-
         # when not logged in
         if  not self.game.my_role:
 
